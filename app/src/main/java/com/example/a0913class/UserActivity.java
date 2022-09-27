@@ -24,6 +24,7 @@ public class UserActivity extends AppCompatActivity {
 
 
         mp = MediaPlayer.create(getApplicationContext(),R.raw.dingdong);
+        mp.start();
 
         Bundle data = this.getIntent().getExtras();
         String name = data.getString("account");

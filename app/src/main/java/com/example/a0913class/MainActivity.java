@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
                     data.putInt("age" , 24);
                     Intent it = new Intent(getApplicationContext(),UserActivity.class);
                     it.putExtras(data);
-                    startActivity(it);
+
+
+                    startActivityForResult(it,100);
                     Toast.makeText(getApplicationContext(), "登入成功",Toast.LENGTH_LONG).show();
 
                 }else{
