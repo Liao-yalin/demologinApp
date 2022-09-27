@@ -1,20 +1,35 @@
 package com.example.a0913class;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 public class UserActivity extends AppCompatActivity {
 
+
+    MediaPlayer mp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+
+        mp = MediaPlayer.create(getApplicationContext(),R.raw.dingdong);
+
+        Bundle data = this.getIntent().getExtras();
+        String name = data.getString("account");
+        int age = data.getInt("age");
+        Toast.makeText(getApplicationContext(),name+age,Toast.LENGTH_LONG).show();
+
         Button dialbtn = findViewById(R.id.dialbtn);
         dialbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,11 +55,34 @@ public class UserActivity extends AppCompatActivity {
         exitbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent it =getIntent();
+                Bundle data = new Bundle();
+                data.putString("key","mydata");
+                it.putExtras(data);
+                setResult(1000,it);
                 finish();
-                Toast.makeText(getApplicationContext(), "登出成功",Toast.LENGTH_LONG).show();
             }
         });
 
 
+    }
+
+    @Override
+    protected  void  onStop(){
+        super.onStop();
+        Log.i("log" , "onStop");
+        mp.stop();
+    }
+    @Override
+    protected  void  onPause(){
+        super.onPause();
+        Log.i("log" , "onPause");
+        mp.pause();
+    }
+    @Override
+    protected  void  onResume(){
+        super.onResume();
+        Log.i("log" , "onResume");
+        mp.start();
     }
 }

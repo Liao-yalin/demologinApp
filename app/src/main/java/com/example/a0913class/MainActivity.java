@@ -1,5 +1,6 @@
 package com.example.a0913class;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -25,7 +26,11 @@ public class MainActivity extends AppCompatActivity {
                 if((name.getText().toString() .equals("james")) &&
                         ( pw.getText().toString() .equals("pw")))
                 {
+                    Bundle data = new Bundle();
+                    data.putString("account" , name.getText().toString());
+                    data.putInt("age" , 24);
                     Intent it = new Intent(getApplicationContext(),UserActivity.class);
+                    it.putExtras(data);
                     startActivity(it);
                     Toast.makeText(getApplicationContext(), "登入成功",Toast.LENGTH_LONG).show();
 
@@ -34,6 +39,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if( requestCode == 100) {
+
+            if (resultCode == 1000) {
+                Bundle da = data.getExtras();
+                String val = da.getString("key");
+                Toast.makeText(getApplicationContext(), val, Toast.LENGTH_LONG).show();
+            }
+        }
 
     }
 }
